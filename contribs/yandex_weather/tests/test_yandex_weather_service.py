@@ -11,14 +11,13 @@ from contribs.yandex_weather.yandex_weather_service import YandexWeatherService
 
 
 def test_get_info_success(yandex_weather_service: YandexWeatherService, httpx_mock: HTTPXMock) -> None:
-    httpx_mock.add_response(json=WEATHER_JSON_RESPONSE)
+    with patch.object(YandexWeatherClient, "get_weather_info", return_value=WEATHER_JSON_RESPONSE) as mock_method:
+        with patch.object(yandex_weather_service, "_save_weather_info", return_value=None) as mocked:
+            resp = yandex_weather_service.get_weather_info()
 
-    with patch.object(yandex_weather_service, "_save_weather_info", return_value=None) as mocked:
-        resp = yandex_weather_service.get_weather_info()
+            assert resp is not None
 
-        assert resp is not None
-
-        assert resp == YandexWeatherInfo.parse_obj(WEATHER_JSON_RESPONSE)
+            assert resp == YandexWeatherInfo.parse_obj(WEATHER_JSON_RESPONSE)
 
     assert mocked.call_count == 1
 
