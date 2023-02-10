@@ -3,14 +3,13 @@ name: Python CI
 
 on:
   push:
-    branches: [ master, develop ]
+    branches: [ main, develop ]
   pull_request:
-    branches: [ master, develop ]
+    branches: [ main, develop ]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    services:
     steps:
       - uses: actions/checkout@v3
       - name: Install Dependencies
