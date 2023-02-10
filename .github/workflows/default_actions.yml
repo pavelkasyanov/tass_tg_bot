@@ -1,0 +1,21 @@
+name: Python CI
+
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Dependencies
+        run: make venv
+      - name: list
+        run: make lint
+      - name: test
+        run: make lint test

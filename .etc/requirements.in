@@ -1,0 +1,6 @@
+pydantic==1.8.2
+pydantic[email]==1.8.2
+click==8.0.1
+pyTelegramBotAPI==4.10.0
+python-dotenv==0.21.1
+httpx==0.23.3
