@@ -24,14 +24,14 @@ def test_get_info_success(yandex_weather_service: YandexWeatherService, httpx_mo
 
 
 def test_get_info_fail(yandex_weather_service: YandexWeatherService, httpx_mock: HTTPXMock) -> None:
-    httpx_mock.add_response(json={})
-    resp = yandex_weather_service.get_weather_info()
+    with patch.object(YandexWeatherClient, "get_weather_info", return_value={}) as mock_method:
+        resp = yandex_weather_service.get_weather_info()
 
-    assert resp is None
+        assert resp is None
 
 
 def test_get_info_from_cache_success(yandex_weather_service: YandexWeatherService, httpx_mock: HTTPXMock) -> None:
-    with patch.object(YandexWeatherClient, "get_weather_info", return_value=None) as mock_method:
+    with patch.object(YandexWeatherClient, "get_weather_info", return_value={}) as mock_method:
         api_response = deepcopy(WEATHER_JSON_RESPONSE)
         api_response["now_dt"] = datetime.datetime.now(datetime.timezone.utc).isoformat()
         mock_return_value = YandexWeatherInfo.parse_obj(api_response)
