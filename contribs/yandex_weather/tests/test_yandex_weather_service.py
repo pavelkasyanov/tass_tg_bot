@@ -24,7 +24,7 @@ def test_get_info_success(yandex_weather_service: YandexWeatherService, httpx_mo
 
 
 def test_get_info_fail(yandex_weather_service: YandexWeatherService, httpx_mock: HTTPXMock) -> None:
-    httpx_mock.add_response(json=None)
+    httpx_mock.add_response(json={})
     resp = yandex_weather_service.get_weather_info()
 
     assert resp is None
